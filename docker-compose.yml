@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  webhook:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: splunk_webhook
+    ports:
+      - "5000:5000"
+    volumes:
+      - ~/scripts:/scripts
+      - ./logs:/app/logs
+    restart: unless-stopped
+  

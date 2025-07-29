@@ -1,0 +1,6 @@
+| mstats latest("dpm.summary_last/error_pfxs") as "DPM_Errors" WHERE "index"="mertics_data" AND source="xr-8"
+
+
+scp xrv9k-iosxr-fwding-1.0.0.1-r7101.CSCwq29885.x86_64.rpm cisco@198.18.133.1:harddisk:
+install add source harddisk: xrv9k-iosxr-fwding-1.0.0.1-r7101.CSCwq29885.x86_64.rpm
+install activate id 1

@@ -1,0 +1,17 @@
+l2vpn:
+  commands:
+    - command: show l2vpn xconnect group MBH xc-name {{ xc_name }} detail
+      type: raw
+    - command: show segment-routing traffic-eng policy
+      type: raw
+    - command: show performance-measurement sr-policy
+      type: raw
+    - command: show l2vpn xconnect
+      type: parse
+
+dpm:
+  commands:
+    - command: show mpls oam dpm prefix
+      type: raw
+    - command: show mpls oam dpm prefix fault
+      type: raw
