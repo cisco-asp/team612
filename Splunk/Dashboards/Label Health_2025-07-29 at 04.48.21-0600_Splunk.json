@@ -1,0 +1,173 @@
+{
+  "visualizations": {
+    "viz_ry20X1ZU": {
+      "type": "splunk.table",
+      "dataSources": {
+        "primary": "ds_LS1jqvLU_ds_pkgDKKql_ds_nFmAUIjo_ds_5ljX6vN2"
+      },
+      "title": "$dd_CAcZt1lJ$",
+      "options": {
+        "columnFormat": {
+          "Outgoing Label": {
+            "data": "> table | seriesByName(\"Outgoing Label\") | formatByType(Outgoing_LabelColumnFormatEditorConfig)",
+            "rowColors": "> table | seriesByName('Outgoing Label') | pick(Outgoing_LabelRowColorsEditorConfig)",
+            "rowBackgroundColors": "> table | seriesByName(\"Outgoing Label\") | matchValue(Outgoing_LabelRowBackgroundColorsEditorConfig)"
+          }
+        }
+      },
+      "context": {
+        "Outgoing_LabelColumnFormatEditorConfig": {
+          "number": {
+            "thousandSeparated": false,
+            "unitPosition": "after"
+          }
+        },
+        "Outgoing_LabelRowColorsEditorConfig": [
+          "#3c444d"
+        ],
+        "Outgoing_LabelRowBackgroundColorsEditorConfig": [
+          {
+            "match": 16999,
+            "value": "#9E2520"
+          }
+        ]
+      },
+      "cornerRadius": [
+        12,
+        12,
+        12,
+        12
+      ]
+    },
+    "viz_1gv95pKc": {
+      "type": "splunk.image",
+      "options": {
+        "src": "splunk-enterprise-kvstore://6862c3c1b660f9cfdb042879"
+      },
+      "cornerRadius": [
+        10,
+        10,
+        10,
+        10
+      ]
+    }
+  },
+  "dataSources": {
+    "ds_5ljX6vN2": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"fib-common.label_information/outgoing_label\") as \"Outgoing Label\" WHERE index=\"mertics_data\" AND source=\"xr-8\" by source, label_value"
+      },
+      "name": "xr-8"
+    },
+    "ds_nFmAUIjo_ds_5ljX6vN2": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"fib-common.label_information/outgoing_label\") as \"Outgoing Label\" WHERE index=\"mertics_data\" AND source=\"xr-8\" by source, label_value"
+      },
+      "name": "xr-8 copy 1"
+    },
+    "ds_pkgDKKql_ds_nFmAUIjo_ds_5ljX6vN2": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"fib-common.label_information/outgoing_label\") as \"Outgoing Label\" WHERE index=\"mertics_data\" AND source=\"xr-1\" by source, label_value"
+      },
+      "name": "xr-1"
+    },
+    "ds_LS1jqvLU_ds_pkgDKKql_ds_nFmAUIjo_ds_5ljX6vN2": {
+      "type": "ds.search",
+      "options": {
+        "refresh": "30s",
+        "refreshType": "interval",
+        "query": "| mstats latest(\"fib-common.label_information/outgoing_label\") as \"Outgoing Label\" WHERE index=\"mertics_data\" AND source=$dd_CAcZt1lJ$ by source, label_value\n| rename label_value AS \"Local Label\""
+      },
+      "name": "xr-8 copy 3"
+    }
+  },
+  "defaults": {
+    "dataSources": {
+      "ds.search": {
+        "options": {
+          "queryParameters": {
+            "latest": "$global_time.latest$",
+            "earliest": "$global_time.earliest$"
+          }
+        }
+      }
+    }
+  },
+  "inputs": {
+    "input_global_trp": {
+      "type": "input.timerange",
+      "options": {
+        "token": "global_time",
+        "defaultValue": "-24h@h,now"
+      },
+      "title": "Global Time Range"
+    },
+    "input_tgWaW8PA": {
+      "options": {
+        "items": [
+          {
+            "label": "All",
+            "value": "*"
+          },
+          {
+            "label": "xr-8",
+            "value": "xr-8"
+          },
+          {
+            "label": "xr-1",
+            "value": "xr-1"
+          },
+          {
+            "label": "xr-2",
+            "value": "xr-2"
+          }
+        ],
+        "defaultValue": "*",
+        "token": "dd_CAcZt1lJ"
+      },
+      "title": "Dropdown Input Title",
+      "type": "input.dropdown",
+      "dataSources": {
+        "primary": "ds_LS1jqvLU_ds_pkgDKKql_ds_nFmAUIjo_ds_5ljX6vN2"
+      }
+    }
+  },
+  "layout": {
+    "type": "grid",
+    "options": {
+      "width": 1440,
+      "height": 960
+    },
+    "structure": [
+      {
+        "item": "viz_ry20X1ZU",
+        "type": "block",
+        "position": {
+          "x": 0,
+          "y": 0,
+          "w": 441,
+          "h": 465
+        }
+      },
+      {
+        "item": "viz_1gv95pKc",
+        "type": "block",
+        "position": {
+          "x": 441,
+          "y": 0,
+          "w": 968,
+          "h": 465
+        }
+      }
+    ],
+    "globalInputs": [
+      "input_global_trp",
+      "input_tgWaW8PA"
+    ]
+  },
+  "description": "Check for any Label Corruption",
+  "title": "Label Health"
+}
