@@ -14,7 +14,7 @@ curl -X POST http://localhost:5000/splunk-webhook/dpm \
   -H "Content-Type: application/json" \
   -d @alert_dpm.json
 
-curl -X POST http://localhost:5100/splunk-webhook/l2vpn \
+curl -X POST http://localhost:5000/splunk-webhook/l2vpn \
   -H "Content-Type: application/json" \
   -d @alert_l2vpn.json
 
@@ -25,7 +25,7 @@ alias exec dpm1 show run mpls oam
 alias exec dpm2 show mpls oam dpm prefix
 alias exec dpm3 show route 10.0.0.1/32 detail
 alias exec dpm4 show mpls forwarding labels 16001
-alias exec dpm5 show mpls oam dpm prefix faults 
+alias exec dpm5 show mpls oam dpm prefix faults
 alias exec dpm7 run rib_lib_test -f corrupt_label_xr5.txt
 
 ## process to corrupt a label ##
