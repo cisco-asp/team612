@@ -1,0 +1,179 @@
+Tue Jul 29 19:54:38.535 UTC
+!! Building configuration...
+!! IOS XR Configuration 7.10.1
+!! Last configuration change at Tue Jul 29 19:54:37 2025 by cisco
+!
+hostname xr-6
+logging console disable
+logging 198.18.133.23 vrf mgmt port default
+logging 198.18.133.23 vrf default port default
+domain vrf mgmt name-server 198.18.128.1
+username cisco
+ group root-lr
+ group cisco-support
+ secret 10 $6$U264e0/WVeMc8e0.$dLzGsN49ukJ0HIvN5e68PyHO3fEBE/MKo4SPekBYq/iCJ49pOuWo3RDLXaF4kiO.WyjPccVKKsaZZjfjTITWY.
+!
+grpc
+ vrf mgmt
+ port 57400
+ no-tls
+!
+vrf mgmt
+ address-family ipv4 unicast
+ !
+!
+tpa
+ vrf mgmt
+  address-family ipv4
+   default-route mgmt
+   update-source dataports MgmtEth0/RP0/CPU0/0
+  !
+ !
+!
+line console
+ exec-timeout 0 0
+ absolute-timeout 0
+ session-timeout 0
+!
+line default
+ exec-timeout 0 0
+ absolute-timeout 0
+ session-timeout 0
+!
+vty-pool default 0 11 line-template default
+http client vrf mgmt
+http client version 1.1
+http client secure-verify-peer disable
+http client source-interface ipv4 MgmtEth0/RP0/CPU0/0
+snmp-server user cisco admins v3 auth md5 encrypted 05080F1C22431F5B4A priv des56 encrypted 00071A1507545A545C SystemOwner
+snmp-server group admins v3 priv
+call-home
+ vrf mgmt
+ service active
+ contact smart-licensing
+ source-interface MgmtEth0/RP0/CPU0/0
+ profile CiscoTAC-1
+  active
+  destination address http https://tools.cisco.com/its/service/oddce/services/DDCEService
+  destination transport-method email disable
+  destination transport-method http
+ !
+!
+netconf-yang agent
+ ssh
+!
+interface Loopback0
+ ipv4 address 10.0.0.6 255.255.255.255
+!
+interface Loopback1
+ ipv4 address 10.10.10.6 255.255.255.255
+!
+interface MgmtEth0/RP0/CPU0/0
+ cdp
+ vrf mgmt
+ ipv4 address 198.18.133.6 255.255.192.0
+!
+interface GigabitEthernet0/0/0/0
+ ipv4 address 198.18.9.2 255.255.255.0
+ lldp
+ !
+!
+interface GigabitEthernet0/0/0/1
+ ipv4 address 198.18.13.1 255.255.255.0
+ lldp
+ !
+!
+interface GigabitEthernet0/0/0/2
+ ipv4 address 198.18.17.1 255.255.255.0
+ lldp
+ !
+!
+interface GigabitEthernet0/0/0/3
+ shutdown
+!
+interface GigabitEthernet0/0/0/4
+ shutdown
+!
+interface GigabitEthernet0/0/0/5
+ shutdown
+!
+interface GigabitEthernet0/0/0/6
+ shutdown
+!
+route-policy PASS
+  pass
+end-policy
+!
+router static
+ vrf mgmt
+  address-family ipv4 unicast
+   0.0.0.0/0 198.18.128.1
+  !
+ !
+!
+router ospf clus_lab
+ segment-routing mpls
+ segment-routing forwarding mpls
+ segment-routing sr-prefer
+ area 0.0.0.0
+  interface Loopback0
+   prefix-sid index 6
+  !
+  interface GigabitEthernet0/0/0/0
+  !
+  interface GigabitEthernet0/0/0/1
+  !
+  interface GigabitEthernet0/0/0/2
+  !
+ !
+!
+router bgp 65000
+ nsr
+ bgp router-id 10.0.0.6
+ address-family ipv4 unicast
+ !
+ address-family vpnv4 unicast
+ !
+ address-family l2vpn evpn
+ !
+ neighbor-group ROUTE_REFLECTORS
+  remote-as 65000
+  update-source Loopback0
+  address-family ipv4 unicast
+  !
+  address-family vpnv4 unicast
+  !
+  address-family l2vpn evpn
+  !
+ !
+ neighbor 10.0.0.1
+  use neighbor-group ROUTE_REFLECTORS
+ !
+ neighbor 10.0.0.5
+  use neighbor-group ROUTE_REFLECTORS
+ !
+!
+mpls oam
+ dpm
+  pps 1
+  interval 1
+ !
+!
+segment-routing
+!
+lldp
+!
+crypto key generate rsa the_default general-keys 2048 | -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx/N9XPoHELhlJC6U2X1n
+usyO38Cb40lbEfNVle27bnxaTYQjfqZ1YlpidO6I11DOadssDlkqTVn2WgEsMJX3
+VdQis3256EpUPgCfWT99M2QloUAwSJxr/Gfy5SRuMaEZ85UsSYjUaFuNwPVHgd5z
+7K8mTGRQ0vs2XIQJt8uyAyJXyZPPECPExpp5YkI+hI/Cz9K4QMNk4Bc4zjWMJ9S7
+ILc56lFmt05GkQJNxhWlrMjTb7iv/MhvkuNDOw5KgrIWu38PG0kIai0cxxyvxaoF
+NSZUmcbzRJJ+PzrKsQNlZle87vbCVtWXz6d8P57OgS2hRAk15GwYjW5NbSELYspw
+pwIDAQAB
+-----END PUBLIC KEY-----
+ |
+ssh server v2
+ssh server vrf mgmt
+ssh server netconf vrf mgmt
+end

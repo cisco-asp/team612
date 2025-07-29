@@ -1,0 +1,173 @@
+Tue Jul 29 19:53:50.747 UTC
+!! Building configuration...
+!! IOS XR Configuration 7.10.1
+!! Last configuration change at Tue Jul 29 19:53:49 2025 by cisco
+!
+hostname xr-2
+logging console disable
+logging 198.18.133.23 vrf mgmt port default
+logging 198.18.133.23 vrf default port default
+domain vrf mgmt name-server 198.18.128.1
+username cisco
+ group root-lr
+ group cisco-support
+ secret 10 $6$WyLEY0z32d/F8Y0.$C83/gz.mxxDM9moDpOGvw8wQ2TdnRK9NqiNFnYGsUWP1OCL4wCyFl2aAGL2ee2umIPZn/AEnU70FQ.uTaqA4q0
+!
+grpc
+ vrf mgmt
+ port 57400
+ no-tls
+!
+vrf mgmt
+ address-family ipv4 unicast
+ !
+!
+tpa
+ vrf mgmt
+  address-family ipv4
+   default-route mgmt
+   update-source dataports MgmtEth0/RP0/CPU0/0
+  !
+ !
+!
+line console
+ exec-timeout 0 0
+ absolute-timeout 0
+ session-timeout 0
+!
+line default
+ exec-timeout 0 0
+ absolute-timeout 0
+ session-timeout 0
+!
+vty-pool default 0 11 line-template default
+http client vrf mgmt
+http client version 1.1
+http client secure-verify-peer disable
+http client source-interface ipv4 MgmtEth0/RP0/CPU0/0
+snmp-server user cisco admins v3 auth md5 encrypted 121A0C0411045D5679 priv des56 encrypted 02050D4808095E731F SystemOwner
+snmp-server group admins v3 priv
+alias exec dpm1 show run mpls oam
+alias exec dpm2 show mpls oam dpm prefix
+alias exec dpm3 show route 10.0.0.8/32 detail
+alias exec dpm4 show mpls forwarding labels 16008
+alias exec dpm5 show mpls oam dpm prefix faults 
+alias exec dpm7 run rib_lib_test -f corrupt_label_xr2.txt
+call-home
+ vrf mgmt
+ service active
+ contact smart-licensing
+ source-interface MgmtEth0/RP0/CPU0/0
+ profile CiscoTAC-1
+  active
+  destination address http https://tools.cisco.com/its/service/oddce/services/DDCEService
+  destination transport-method email disable
+  destination transport-method http
+ !
+!
+netconf-yang agent
+ ssh
+!
+interface Loopback0
+ ipv4 address 10.0.0.2 255.255.255.255
+!
+interface Loopback1
+ ipv4 address 10.10.10.2 255.255.255.255
+!
+interface MgmtEth0/RP0/CPU0/0
+ cdp
+ vrf mgmt
+ ipv4 address 198.18.133.2 255.255.192.0
+!
+interface GigabitEthernet0/0/0/0
+ ipv4 address 198.18.7.2 255.255.255.0
+ lldp
+ !
+!
+interface GigabitEthernet0/0/0/1
+ ipv4 address 198.18.9.1 255.255.255.0
+ lldp
+ !
+!
+interface GigabitEthernet0/0/0/2
+ ipv4 address 198.18.15.1 255.255.255.0
+ lldp
+ !
+!
+route-policy PASS
+  pass
+end-policy
+!
+router static
+ vrf mgmt
+  address-family ipv4 unicast
+   0.0.0.0/0 198.18.128.1
+  !
+ !
+!
+router ospf clus_lab
+ segment-routing mpls
+ segment-routing forwarding mpls
+ segment-routing sr-prefer
+ area 0.0.0.0
+  interface Loopback0
+   prefix-sid index 2
+  !
+  interface GigabitEthernet0/0/0/0
+  !
+  interface GigabitEthernet0/0/0/1
+  !
+  interface GigabitEthernet0/0/0/2
+  !
+ !
+!
+router bgp 65000
+ nsr
+ bgp router-id 10.0.0.2
+ address-family ipv4 unicast
+ !
+ address-family vpnv4 unicast
+ !
+ address-family l2vpn evpn
+ !
+ neighbor-group ROUTE_REFLECTORS
+  remote-as 65000
+  update-source Loopback0
+  address-family ipv4 unicast
+  !
+  address-family vpnv4 unicast
+  !
+  address-family l2vpn evpn
+  !
+ !
+ neighbor 10.0.0.1
+  use neighbor-group ROUTE_REFLECTORS
+ !
+ neighbor 10.0.0.5
+  use neighbor-group ROUTE_REFLECTORS
+ !
+!
+mpls oam
+ dpm
+  pps 1
+  interval 1
+ !
+!
+segment-routing
+!
+lldp
+!
+crypto key generate rsa the_default general-keys 2048 | -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArsuSwUQJapDY1o9Ot6ID
+PgucOYmOHuJ9zLkydVwePSGktRhdeSytyD5SJwH2FC7K36NQed/YmMGv2d0+ovgO
+y2Cgiz74mRo/p2Q5yYrhKnBVNzb2VUoU045bZtRVoouJN181nV7jjOhmDBQECru7
+M0hJ6S/PoA7EqMKFja9ByBW5i1u96Bfkff3kBsyVtAo9SkOsSGmFXvphGV54XGzi
+5AqhjqdS1sWX4PjDgp3vY8I75ywdj+LM8eMnnw0l3hof04qR64y57cxaHefmEqmQ
+Wf0mBVb38E2n90ys02S139y3i6rEID2/6XnLSPXNXTqh/r1Hp4qpCtzPx/7ZKBre
+EwIDAQAB
+-----END PUBLIC KEY-----
+ |
+ssh server v2
+ssh server vrf mgmt
+ssh server netconf vrf mgmt
+end

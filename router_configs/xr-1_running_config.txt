@@ -1,0 +1,201 @@
+Tue Jul 29 19:53:07.687 UTC
+!! Building configuration...
+!! IOS XR Configuration 7.10.1
+!! Last configuration change at Tue Jul 29 19:53:06 2025 by cisco
+!
+hostname xr-1
+logging console disable
+logging 198.18.133.23 vrf mgmt port default
+logging 198.18.133.23 vrf default port default
+domain vrf mgmt name-server 198.18.128.1
+username cisco
+ group root-lr
+ group cisco-support
+ secret 10 $6$Anfa71weNmOaA71.$BbWKEmlKyk1Gqz0sDkZMRUC/aAY8AJ83VETV6U0VhZ8H607Zf7zsMMPjtdDoCHWbnCARtcoO1O5svfEm4E2A3/
+!
+grpc
+ vrf mgmt
+ port 57400
+ no-tls
+!
+vrf mgmt
+ address-family ipv4 unicast
+ !
+!
+tpa
+ vrf mgmt
+  address-family ipv4
+   default-route mgmt
+   update-source dataports MgmtEth0/RP0/CPU0/0
+  !
+ !
+!
+line console
+ exec-timeout 0 0
+ absolute-timeout 0
+ session-timeout 0
+!
+line default
+ exec-timeout 0 0
+ absolute-timeout 0
+ session-timeout 0
+!
+vty-pool default 0 11 line-template default
+http client vrf mgmt
+http client version 1.1
+http client secure-verify-peer disable
+http client source-interface ipv4 MgmtEth0/RP0/CPU0/0
+snmp-server user cisco admins v3 auth md5 encrypted 060506324F41584B56 priv des56 encrypted 14141B180F0B7B7977 SystemOwner
+snmp-server group admins v3 priv
+call-home
+ vrf mgmt
+ service active
+ contact smart-licensing
+ source-interface MgmtEth0/RP0/CPU0/0
+ profile CiscoTAC-1
+  active
+  destination address http https://tools.cisco.com/its/service/oddce/services/DDCEService
+  destination transport-method email disable
+  destination transport-method http
+ !
+!
+netconf-yang agent
+ ssh
+!
+interface Loopback0
+ ipv4 address 10.0.0.1 255.255.255.255
+!
+interface Loopback1
+ ipv4 address 10.10.10.1 255.255.255.255
+!
+interface MgmtEth0/RP0/CPU0/0
+ cdp
+ vrf mgmt
+ ipv4 address 198.18.133.1 255.255.192.0
+!
+interface GigabitEthernet0/0/0/0
+ ipv4 address 198.18.6.2 255.255.255.0
+ lldp
+ !
+!
+interface GigabitEthernet0/0/0/1
+ ipv4 address 198.18.8.1 255.255.255.0
+ lldp
+ !
+!
+interface GigabitEthernet0/0/0/2
+ ipv4 address 198.18.15.2 255.255.255.0
+ lldp
+ !
+!
+interface BVI1
+ ipv4 address 11.10.10.1 255.255.255.224
+ ipv4 address 11.10.10.2 255.255.255.224 secondary
+!
+route-policy PASS
+  pass
+end-policy
+!
+router static
+ vrf mgmt
+  address-family ipv4 unicast
+   0.0.0.0/0 198.18.128.1
+  !
+ !
+!
+router ospf clus_lab
+ segment-routing mpls
+ segment-routing forwarding mpls
+ segment-routing sr-prefer
+ area 0.0.0.0
+  interface Loopback0
+   prefix-sid index 1
+  !
+  interface GigabitEthernet0/0/0/0
+  !
+  interface GigabitEthernet0/0/0/1
+  !
+  interface GigabitEthernet0/0/0/2
+  !
+ !
+!
+router bgp 65000
+ nsr
+ bgp router-id 10.0.0.1
+ bgp update-delay 1
+ bgp graceful-restart restart-time 120
+ bgp graceful-restart stalepath-time 360
+ bgp graceful-restart
+ ibgp policy out enforce-modifications
+ address-family ipv4 unicast
+ !
+ address-family vpnv4 unicast
+ !
+ address-family l2vpn evpn
+ !
+ neighbor-group LEAF-RRC
+  remote-as 65000
+  update-source Loopback0
+  address-family ipv4 unicast
+   route-reflector-client
+  !
+  address-family vpnv4 unicast
+   route-reflector-client
+  !
+  address-family l2vpn evpn
+   route-reflector-client
+  !
+ !
+ neighbor-group RR_PEERS
+  remote-as 65000
+  update-source Loopback0
+  address-family ipv4 unicast
+   route-reflector-client
+  !
+  address-family vpnv4 unicast
+   route-reflector-client
+  !
+  address-family l2vpn evpn
+   route-reflector-client
+  !
+ !
+ neighbor 10.0.0.2
+  use neighbor-group LEAF-RRC
+ !
+ neighbor 10.0.0.5
+  use neighbor-group RR_PEERS
+ !
+ neighbor 10.0.0.6
+  use neighbor-group LEAF-RRC
+ !
+ neighbor 10.0.0.7
+  use neighbor-group LEAF-RRC
+ !
+ neighbor 10.0.0.8
+  use neighbor-group LEAF-RRC
+ !
+!
+mpls oam
+ dpm
+  pps 1
+  interval 1
+ !
+!
+segment-routing
+!
+lldp
+!
+crypto key generate rsa the_default general-keys 2048 | -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyiBIrS3VwxeiODY/xDMr
+Ka4p/0NR3FiTaeqjJEXC6RYKc3l/JJIWNh4WKPOVy3+6wq7fQxd1AYpRvYRED0Hp
+XrwBAQwWsL+tLRfCUIHG3gybpjnhC0UO5Sb0wOmgio4dxigA7Sk4sn4i4MzDKfNy
++GOP3Nc2ar/3MPnsh4erRVjAXxNxA3p4C2+yueLKyUT/tgXvBXZLRJYeCiith7o5
+QUWaIyHCDxMwOfWH7orgRMRqwMSkPKRGmcf6ePOaLCd8MstvdmH12nuhTWM2eY0L
+ACo2toNr9Z8rlXXWFy/4/z5D7O3ekpxboHvtpWslfmi0w9xBriAH+WH2IKEmmnz7
+TwIDAQAB
+-----END PUBLIC KEY-----
+ |
+ssh server v2
+ssh server vrf mgmt
+ssh server netconf vrf mgmt
+end

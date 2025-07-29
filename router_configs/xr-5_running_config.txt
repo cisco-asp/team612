@@ -1,0 +1,214 @@
+Tue Jul 29 19:54:29.099 UTC
+!! Building configuration...
+!! IOS XR Configuration 7.10.1
+!! Last configuration change at Tue Jul 29 19:54:27 2025 by cisco
+!
+hostname xr-5
+logging console disable
+logging 198.18.133.23 vrf mgmt port default
+logging 198.18.133.23 vrf default port default
+domain vrf mgmt name-server 198.18.128.1
+username cisco
+ group root-lr
+ group cisco-support
+ secret 10 $6$3lH/wI3.........$LKHSlcm/fZbkixGAXKdDievKSwyu6g2kHalX4AoxfTQF.hKQGpAAeVgGvcTSG6bWFEbho3J3Igas4oi1zApUr0
+!
+grpc
+ vrf mgmt
+ port 57400
+ no-tls
+!
+vrf mgmt
+ address-family ipv4 unicast
+ !
+!
+tpa
+ vrf mgmt
+  address-family ipv4
+   default-route mgmt
+   update-source dataports MgmtEth0/RP0/CPU0/0
+  !
+ !
+!
+line console
+ exec-timeout 0 0
+ absolute-timeout 0
+ session-timeout 0
+!
+line default
+ exec-timeout 0 0
+ absolute-timeout 0
+ session-timeout 0
+!
+vty-pool default 0 11 line-template default
+http client vrf mgmt
+http client version 1.1
+http client secure-verify-peer disable
+http client source-interface ipv4 MgmtEth0/RP0/CPU0/0
+snmp-server user cisco admins v3 auth md5 encrypted 104D000A061843595F priv des56 encrypted 14141B180F0B7B7977 SystemOwner
+snmp-server group admins v3 priv
+alias exec dpm1 show run mpls oam
+alias exec dpm2 show mpls oam dpm prefix
+alias exec dpm4 show mpls forwarding labels 16001
+alias exec dpm5 show mpls oam dpm prefix faults
+alias exec dpm7 run rib_lib_test -f corrupt_label_xr5.txt
+call-home
+ vrf mgmt
+ service active
+ contact smart-licensing
+ source-interface MgmtEth0/RP0/CPU0/0
+ profile CiscoTAC-1
+  active
+  destination address http https://tools.cisco.com/its/service/oddce/services/DDCEService
+  destination transport-method email disable
+  destination transport-method http
+ !
+!
+netconf-yang agent
+ ssh
+!
+interface Loopback0
+ ipv4 address 10.0.0.5 255.255.255.255
+!
+interface Loopback1
+ ipv4 address 10.10.10.5 255.255.255.255
+!
+interface MgmtEth0/RP0/CPU0/0
+ cdp
+ vrf mgmt
+ ipv4 address 198.18.133.5 255.255.192.0
+!
+interface GigabitEthernet0/0/0/0
+ ipv4 address 198.18.8.2 255.255.255.0
+ lldp
+ !
+!
+interface GigabitEthernet0/0/0/1
+ ipv4 address 198.18.12.1 255.255.255.0
+ lldp
+ !
+!
+interface GigabitEthernet0/0/0/2
+ ipv4 address 198.18.17.2 255.255.255.0
+ lldp
+ !
+!
+interface GigabitEthernet0/0/0/3
+ shutdown
+!
+interface GigabitEthernet0/0/0/4
+ shutdown
+!
+interface GigabitEthernet0/0/0/5
+ shutdown
+!
+interface GigabitEthernet0/0/0/6
+ shutdown
+!
+route-policy PASS
+  pass
+end-policy
+!
+router static
+ vrf mgmt
+  address-family ipv4 unicast
+   0.0.0.0/0 198.18.128.1
+  !
+ !
+!
+router ospf clus_lab
+ segment-routing mpls
+ segment-routing forwarding mpls
+ segment-routing sr-prefer
+ area 0.0.0.0
+  interface Loopback0
+   prefix-sid index 5
+  !
+  interface GigabitEthernet0/0/0/0
+  !
+  interface GigabitEthernet0/0/0/1
+  !
+  interface GigabitEthernet0/0/0/2
+  !
+ !
+!
+router bgp 65000
+ nsr
+ bgp router-id 10.0.0.5
+ bgp update-delay 1
+ bgp graceful-restart restart-time 120
+ bgp graceful-restart stalepath-time 360
+ bgp graceful-restart
+ ibgp policy out enforce-modifications
+ address-family ipv4 unicast
+ !
+ address-family vpnv4 unicast
+ !
+ address-family l2vpn evpn
+ !
+ neighbor-group LEAF-RRC
+  remote-as 65000
+  update-source Loopback0
+  address-family ipv4 unicast
+   route-reflector-client
+  !
+  address-family vpnv4 unicast
+   route-reflector-client
+  !
+  address-family l2vpn evpn
+   route-reflector-client
+  !
+ !
+ neighbor-group RR_PEERS
+  remote-as 65000
+  update-source Loopback0
+  address-family ipv4 unicast
+   route-reflector-client
+  !
+  address-family vpnv4 unicast
+   route-reflector-client
+  !
+  address-family l2vpn evpn
+   route-reflector-client
+  !
+ !
+ neighbor 10.0.0.1
+  use neighbor-group RR_PEERS
+ !
+ neighbor 10.0.0.2
+  use neighbor-group LEAF-RRC
+ !
+ neighbor 10.0.0.6
+  use neighbor-group LEAF-RRC
+ !
+ neighbor 10.0.0.7
+  use neighbor-group LEAF-RRC
+ !
+ neighbor 10.0.0.8
+  use neighbor-group LEAF-RRC
+ !
+!
+mpls oam
+ dpm
+  pps 1
+  interval 1
+ !
+!
+segment-routing
+!
+lldp
+!
+crypto key generate rsa the_default general-keys 2048 | -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2hYP6m1UL+ukvkGJDfbR
+lSWJdZ+iJZgXuHax4fO5iS/JxlD4u+JxV9DUlZfkwuPlQZD2CJUXH7YPW494Id/l
+0Mvpn4w9eMwKXyeHUE1/hc8ljs/o/jZK9RjER0miml/4FsUAQizsDe6HDvderlvm
+BdKvWXXIDfKYhSw/fa96tabrY0+vCZ33PfVBubwESs4cQU3GWQHIi91/K98aTwlz
+Q/rYBrIGpmgo+YwnNgp+EGNEC9M5Ui0k4K6a+9UsTeH/ecR2RF91wimTi6txyHTb
+i1Mg/JvQabqtXVb+tVjegES5U5hywYABbKwbWglCdX58jNmCrKpW118lvXAyWWrN
+8QIDAQAB
+-----END PUBLIC KEY-----
+ |
+ssh server v2
+ssh server vrf mgmt
+ssh server netconf vrf mgmt
+end
