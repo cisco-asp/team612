@@ -1,0 +1,1168 @@
+{
+  "dataSources": {
+    "ds_Dn0TyWTA": {
+      "type": "ds.search",
+      "options": {
+        "query": "|mstats latest(\"dpm.prefixes/prefix/pfx_sid\") as SID WHERE index=\"mertics_data\" AND source=\"xr-2\" by prefix",
+        "queryParameters": {
+          "earliest": "-1h",
+          "latest": "now"
+        }
+      },
+      "name": "Protect SIDs 22"
+    },
+    "ds_rZn7gY2C": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"\"dpm.summary_last/validated_pfxs\"\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-2\"",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now"
+        }
+      },
+      "name": "Table search"
+    },
+    "ds_3Fl699Rz": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"\"dpm.summary_last/validated_pfxs\"\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-1\"",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now"
+        }
+      },
+      "name": "Prefixes Validated search"
+    },
+    "ds_aS66vt4h": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"dpm.summary/dpm_packets_per_second\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-1\"",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now"
+        }
+      },
+      "name": "R1"
+    },
+    "ds_1tKOHVUU": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"dpm.summary/dpm_interval\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-1\"",
+        "queryParameters": {
+          "earliest": "-1h",
+          "latest": "now"
+        }
+      },
+      "name": "Status - Table search"
+    },
+    "ds_DktwcMSH_ds_1tKOHVUU": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"dpm.summary/dpm_interval\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-2\"",
+        "queryParameters": {
+          "earliest": "-1h",
+          "latest": "now"
+        }
+      },
+      "name": "Status - Table search copy 1"
+    },
+    "ds_1ofIaFN7_ds_DktwcMSH_ds_1tKOHVUU": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"dpm.summary/dpm_interval\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-1\"",
+        "queryParameters": {
+          "earliest": "-1h",
+          "latest": "now"
+        }
+      },
+      "name": "Status - Table search copy 2"
+    },
+    "ds_5tLzMWPH_ds_DktwcMSH_ds_1tKOHVUU": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"dpm.summary/dpm_interval\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-5\"",
+        "queryParameters": {
+          "earliest": "-1h",
+          "latest": "now"
+        }
+      },
+      "name": "Status - Table search copy 3"
+    },
+    "ds_hM7qnyoe_ds_5tLzMWPH_ds_DktwcMSH_ds_1tKOHVUU": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"dpm.summary/dpm_interval\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-6\"",
+        "queryParameters": {
+          "earliest": "-1h",
+          "latest": "now"
+        }
+      },
+      "name": "Status - Table search copy 4"
+    },
+    "ds_d5rMyH8H_ds_aS66vt4h": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"dpm.summary/dpm_packets_per_second\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-8\" span=10s",
+        "queryParameters": {
+          "earliest": "-1h",
+          "latest": "now"
+        }
+      },
+      "name": "Rate PPS search copy 1"
+    },
+    "ds_XQWlxiah_ds_aS66vt4h": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"dpm.summary/dpm_packets_per_second\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-8\" span=10s",
+        "queryParameters": {
+          "earliest": "-1h",
+          "latest": "now"
+        }
+      },
+      "name": "Rate PPS search copy 2"
+    },
+    "ds_o55mfAgn": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"dpm.summary/dpm_packets_per_second\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-5\"",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now"
+        }
+      },
+      "name": "Rate PPS 5"
+    },
+    "ds_2uFlJh02_ds_hM7qnyoe_ds_5tLzMWPH_ds_DktwcMSH_ds_1tKOHVUU": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"dpm.summary/dpm_interval\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-8\"",
+        "queryParameters": {
+          "earliest": "-1h",
+          "latest": "now"
+        }
+      },
+      "name": "Status - Table search copy 5"
+    },
+    "ds_wvNMsj8a_ds_aS66vt4h": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"dpm.summary/dpm_packets_per_second\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-8\"",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now"
+        }
+      },
+      "name": "Rate PPS search 8"
+    },
+    "ds_gQUAcTFF_ds_hM7qnyoe_ds_5tLzMWPH_ds_DktwcMSH_ds_1tKOHVUU": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"dpm.summary/dpm_interval\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-8\"",
+        "queryParameters": {
+          "earliest": "-1h",
+          "latest": "now"
+        }
+      },
+      "name": "Status - Table search copy 6"
+    },
+    "ds_bZGFtXPZ_ds_hM7qnyoe_ds_5tLzMWPH_ds_DktwcMSH_ds_1tKOHVUU": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"dpm.summary/dpm_interval\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-8\"",
+        "queryParameters": {
+          "earliest": "0",
+          "latest": ""
+        }
+      },
+      "name": "Status - Table search copy 7"
+    },
+    "ds_BzQRksBD": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"dpm.summary/dpm_packets_per_second\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-6\"",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now"
+        }
+      },
+      "name": "R6"
+    },
+    "ds_5lSIXhBV": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"dpm.summary/dpm_packets_per_second\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-2\"",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now"
+        }
+      },
+      "name": "Search_R21"
+    },
+    "ds_zQ30L6FX_ds_3Fl699Rz": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"\"dpm.summary_last/validated_pfxs\"\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-5\"",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now"
+        }
+      },
+      "name": "Prefixes Validated search copy 1"
+    },
+    "ds_TWaP6EJB_ds_3Fl699Rz": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"\"dpm.summary_last/validated_pfxs\"\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-5\"",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now"
+        }
+      },
+      "name": "Prefixes Validated search copy 2"
+    },
+    "ds_69nG4Ceb_ds_TWaP6EJB_ds_3Fl699Rz": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"\"dpm.summary_last/validated_pfxs\"\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-5\"",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now"
+        }
+      },
+      "name": "Prefixes Validated search copy 3"
+    },
+    "ds_8wZRjbLe_ds_TWaP6EJB_ds_3Fl699Rz": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"\"dpm.summary_last/validated_pfxs\"\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-5\"",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now"
+        }
+      },
+      "name": "Prefixes Validated search copy 4"
+    },
+    "ds_JF4emdqv_ds_3Fl699Rz": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"\"dpm.summary_last/validated_pfxs\"\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-2\"",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now"
+        }
+      },
+      "name": "Prefixes Validated search 2"
+    },
+    "ds_k594y9k0_ds_JF4emdqv_ds_3Fl699Rz": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"\"dpm.summary_last/validated_pfxs\"\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-5\"",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now"
+        }
+      },
+      "name": "Prefixes Validated search 5"
+    },
+    "ds_pyh7WOMF_ds_k594y9k0_ds_JF4emdqv_ds_3Fl699Rz": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"\"dpm.summary_last/validated_pfxs\"\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-6\"",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now"
+        }
+      },
+      "name": "Prefixes Validated search 6"
+    },
+    "ds_aagSMILI_ds_pyh7WOMF_ds_k594y9k0_ds_JF4emdqv_ds_3Fl699Rz": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"\"dpm.summary_last/validated_pfxs\"\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-8\"",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now"
+        }
+      },
+      "name": "Prefixes Validated search 8"
+    },
+    "ds_vlkYFaw8_ds_Dn0TyWTA": {
+      "type": "ds.search",
+      "options": {
+        "query": "|mstats latest(\"dpm.prefixes/prefix/pfx_sid\") WHERE index=\"mertics_data\" AND source=\"xr-1\" by prefix",
+        "queryParameters": {
+          "earliest": "-1h",
+          "latest": "now"
+        }
+      },
+      "name": "Protected SIDs search copy 1"
+    },
+    "ds_y5Oe98ZU_ds_Dn0TyWTA": {
+      "type": "ds.search",
+      "options": {
+        "query": "|mstats latest(\"dpm.prefixes/prefix/pfx_sid\") as SID WHERE index=\"mertics_data\" AND source=\"xr-5\" by prefix",
+        "queryParameters": {
+          "earliest": "-1h",
+          "latest": "now"
+        }
+      },
+      "name": "Protected SIDs 5"
+    },
+    "ds_bWFbYNLa_ds_y5Oe98ZU_ds_Dn0TyWTA": {
+      "type": "ds.search",
+      "options": {
+        "query": "|mstats latest(\"dpm.prefixes/prefix/pfx_sid\") as SID  WHERE index=\"mertics_data\" AND source=\"xr-6\" by prefix",
+        "queryParameters": {
+          "earliest": "-1h",
+          "latest": "now"
+        }
+      },
+      "name": "Protected SIDs 6"
+    },
+    "ds_UJKzBr8H_ds_bWFbYNLa_ds_y5Oe98ZU_ds_Dn0TyWTA": {
+      "type": "ds.search",
+      "options": {
+        "query": "|mstats latest(\"dpm.prefixes/prefix/pfx_sid\") as SID WHERE index=\"mertics_data\" AND source=\"xr-8\" by prefix",
+        "queryParameters": {
+          "earliest": "-1h",
+          "latest": "now"
+        }
+      },
+      "name": "Protected SIDs 8"
+    },
+    "ds_Uwan2l0z": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mcatalog values(source) WHERE index=\"mertics_data\" by source ",
+        "queryParameters": {
+          "earliest": "-4h@m",
+          "latest": "now"
+        },
+        "enableSmartSources": true
+      },
+      "name": "dashboard_source"
+    },
+    "ds_gPo4z21C": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"dpm.summary_last/error_pfxs\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-1\"",
+        "queryParameters": {
+          "earliest": "0",
+          "latest": ""
+        },
+        "refresh": "30s",
+        "refreshType": "interval"
+      },
+      "name": "prefixerrorsx1"
+    },
+    "ds_8uJbSHdc_ds_gPo4z21C": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"dpm.summary_last/error_pfxs\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-2\"",
+        "queryParameters": {
+          "earliest": "0",
+          "latest": ""
+        },
+        "refresh": "30s",
+        "refreshType": "interval"
+      },
+      "name": "prefixerrorsx2"
+    },
+    "ds_J9pVUUz6_ds_8uJbSHdc_ds_gPo4z21C": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"dpm.summary_last/error_pfxs\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-5\"",
+        "queryParameters": {
+          "earliest": "0",
+          "latest": ""
+        },
+        "refresh": "30s",
+        "refreshType": "interval"
+      },
+      "name": "prefixerrorsx5"
+    },
+    "ds_sChf2EWq_ds_J9pVUUz6_ds_8uJbSHdc_ds_gPo4z21C": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"dpm.summary_last/error_pfxs\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-6\"",
+        "queryParameters": {
+          "earliest": "0",
+          "latest": ""
+        },
+        "refresh": "30s",
+        "refreshType": "interval"
+      },
+      "name": "prefixerrorsx6"
+    },
+    "ds_VNwAGVNI_ds_sChf2EWq_ds_J9pVUUz6_ds_8uJbSHdc_ds_gPo4z21C": {
+      "type": "ds.search",
+      "options": {
+        "query": "| mstats latest(\"dpm.summary_last/error_pfxs\") WHERE \"index\"=\"mertics_data\" AND source=\"xr-8\"",
+        "queryParameters": {
+          "earliest": "0",
+          "latest": ""
+        },
+        "refresh": "30s",
+        "refreshType": "interval"
+      },
+      "name": "prefixerrorsx8"
+    },
+    "ds_b67GCuQf": {
+      "type": "ds.search",
+      "options": {
+        "query": "index=events_data \"DPM\"",
+        "queryParameters": {
+          "earliest": "0",
+          "latest": ""
+        },
+        "refresh": "30s",
+        "refreshType": "interval"
+      },
+      "name": "Search_1"
+    },
+    "ds_oca2RVww": {
+      "type": "ds.search",
+      "options": {
+        "query": "|mstats latest(\"fib-common.label_information/outgoing_label\") as \"Outgoing Label\" where index=\"mertics_data\" by source, label_value\n|search latest(\"dpm.prefixes/prefix/errors\") > 0",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now"
+        }
+      },
+      "name": "Search_2"
+    }
+  },
+  "visualizations": {
+    "viz_OhLZ4SMk": {
+      "type": "splunk.table",
+      "options": {
+        "count": 20,
+        "dataOverlayMode": "none",
+        "drilldown": "none",
+        "showRowNumbers": false,
+        "showInternalFields": false
+      },
+      "dataSources": {
+        "primary": "ds_Dn0TyWTA"
+      },
+      "title": "XR-1 Protected SIDs"
+    },
+    "viz_wRA5ZxAa": {
+      "type": "splunk.singlevalue",
+      "options": {},
+      "dataSources": {
+        "primary": "ds_3Fl699Rz"
+      },
+      "title": "Prefixes Validated",
+      "context": {},
+      "containerOptions": {},
+      "showProgressBar": false,
+      "showLastUpdated": false
+    },
+    "viz_WOrWsfGL": {
+      "type": "splunk.singlevalueradial",
+      "options": {
+        "unit": "pps"
+      },
+      "dataSources": {
+        "primary": "ds_aS66vt4h"
+      },
+      "title": "XR-1 DPM PPS",
+      "containerOptions": {},
+      "showProgressBar": false,
+      "showLastUpdated": false
+    },
+    "viz_LpEXFI0U": {
+      "type": "splunk.singlevalue",
+      "dataSources": {
+        "primary": "ds_1tKOHVUU"
+      },
+      "title": "XR-1 DPM Interval",
+      "containerOptions": {},
+      "showProgressBar": false,
+      "showLastUpdated": false,
+      "description": "Interval in Minutes",
+      "options": {},
+      "context": {}
+    },
+    "viz_dTAx8KB5": {
+      "type": "splunk.singlevalue",
+      "dataSources": {
+        "primary": "ds_DktwcMSH_ds_1tKOHVUU"
+      },
+      "title": "XR-2 DPM Interval",
+      "containerOptions": {},
+      "showProgressBar": false,
+      "showLastUpdated": false,
+      "description": "Interval in Minutes",
+      "options": {},
+      "context": {}
+    },
+    "viz_23x7cGfQ": {
+      "type": "splunk.fillergauge",
+      "dataSources": {
+        "primary": "ds_1ofIaFN7_ds_DktwcMSH_ds_1tKOHVUU"
+      },
+      "title": "XR-1",
+      "containerOptions": {},
+      "showProgressBar": false,
+      "showLastUpdated": false,
+      "description": "Interval in Minutes"
+    },
+    "viz_j6sRFC8U": {
+      "type": "splunk.singlevalue",
+      "dataSources": {
+        "primary": "ds_5tLzMWPH_ds_DktwcMSH_ds_1tKOHVUU"
+      },
+      "title": "XR-5 DPM Interval",
+      "containerOptions": {},
+      "showProgressBar": false,
+      "showLastUpdated": false,
+      "description": "Interval in Minutes",
+      "options": {},
+      "context": {}
+    },
+    "viz_vhW41vwL": {
+      "type": "splunk.singlevalue",
+      "dataSources": {
+        "primary": "ds_hM7qnyoe_ds_5tLzMWPH_ds_DktwcMSH_ds_1tKOHVUU"
+      },
+      "title": "XR-6 DPM Interval",
+      "containerOptions": {},
+      "showProgressBar": false,
+      "showLastUpdated": false,
+      "description": "Interval in Minutes",
+      "options": {},
+      "context": {}
+    },
+    "viz_Uy3orXT1": {
+      "type": "splunk.singlevalueradial",
+      "title": "XR-2 DPM PPS",
+      "dataSources": {
+        "primary": "ds_5lSIXhBV"
+      },
+      "options": {
+        "unit": "pps"
+      }
+    },
+    "viz_spSP3Ko6": {
+      "type": "splunk.singlevalueradial",
+      "options": {}
+    },
+    "viz_JZpC6IAQ": {
+      "type": "splunk.singlevalueradial",
+      "options": {}
+    },
+    "viz_FNNZcKg5": {
+      "type": "splunk.singlevalueradial",
+      "dataSources": {
+        "primary": "ds_o55mfAgn"
+      },
+      "title": "XR-5 DPM PPS",
+      "options": {
+        "unit": "pps"
+      }
+    },
+    "viz_QcPoQDAL": {
+      "type": "splunk.singlevalueradial",
+      "title": "XR-6 DPM PPS",
+      "dataSources": {
+        "primary": "ds_BzQRksBD"
+      },
+      "options": {
+        "unit": "pps"
+      }
+    },
+    "viz_vYOYcIiH": {
+      "type": "splunk.singlevalueradial",
+      "title": "XR-8 DPM PPS",
+      "dataSources": {
+        "primary": "ds_wvNMsj8a_ds_aS66vt4h"
+      },
+      "options": {
+        "unit": "pps"
+      }
+    },
+    "viz_8xuKQ7yg": {
+      "type": "splunk.singlevalue",
+      "dataSources": {
+        "primary": "ds_bZGFtXPZ_ds_hM7qnyoe_ds_5tLzMWPH_ds_DktwcMSH_ds_1tKOHVUU"
+      },
+      "title": "XR-8 DPM Interval",
+      "containerOptions": {},
+      "showProgressBar": false,
+      "showLastUpdated": false,
+      "description": "Interval in Minutes",
+      "options": {},
+      "context": {}
+    },
+    "viz_undXwdlF": {
+      "type": "splunk.singlevalue",
+      "options": {},
+      "dataSources": {
+        "primary": "ds_69nG4Ceb_ds_TWaP6EJB_ds_3Fl699Rz"
+      },
+      "title": "Prefixes Validated",
+      "context": {},
+      "containerOptions": {},
+      "showProgressBar": false,
+      "showLastUpdated": false
+    },
+    "viz_VjphJcmx": {
+      "type": "splunk.singlevalue",
+      "options": {},
+      "dataSources": {
+        "primary": "ds_JF4emdqv_ds_3Fl699Rz"
+      },
+      "title": "Prefixes Validated",
+      "context": {},
+      "containerOptions": {},
+      "showProgressBar": false,
+      "showLastUpdated": false
+    },
+    "viz_khJtGX5R": {
+      "type": "splunk.singlevalue",
+      "options": {},
+      "dataSources": {
+        "primary": "ds_k594y9k0_ds_JF4emdqv_ds_3Fl699Rz"
+      },
+      "title": "Prefixes Validated",
+      "context": {},
+      "containerOptions": {},
+      "showProgressBar": false,
+      "showLastUpdated": false
+    },
+    "viz_OOnNAZZN": {
+      "type": "splunk.singlevalue",
+      "options": {},
+      "dataSources": {
+        "primary": "ds_pyh7WOMF_ds_k594y9k0_ds_JF4emdqv_ds_3Fl699Rz"
+      },
+      "title": "Prefixes Validated",
+      "context": {},
+      "containerOptions": {},
+      "showProgressBar": false,
+      "showLastUpdated": false
+    },
+    "viz_FA9waDyJ": {
+      "type": "splunk.singlevalue",
+      "options": {},
+      "dataSources": {
+        "primary": "ds_aagSMILI_ds_pyh7WOMF_ds_k594y9k0_ds_JF4emdqv_ds_3Fl699Rz"
+      },
+      "title": "Prefixes Validated",
+      "context": {},
+      "containerOptions": {},
+      "showProgressBar": false,
+      "showLastUpdated": false
+    },
+    "viz_i8kkEwW9": {
+      "type": "splunk.table",
+      "dataSources": {
+        "primary": "ds_Dn0TyWTA"
+      },
+      "title": "XR-2 Protected SIDs"
+    },
+    "viz_kNVHslXb": {
+      "type": "splunk.table",
+      "dataSources": {
+        "primary": "ds_y5Oe98ZU_ds_Dn0TyWTA"
+      },
+      "title": "XR-5 Protected SIDs"
+    },
+    "viz_OUvYwgtg": {
+      "type": "splunk.table",
+      "dataSources": {
+        "primary": "ds_bWFbYNLa_ds_y5Oe98ZU_ds_Dn0TyWTA"
+      },
+      "title": "XR-6 Protected SIDs"
+    },
+    "viz_FVUsZIDg": {
+      "type": "splunk.table",
+      "dataSources": {
+        "primary": "ds_UJKzBr8H_ds_bWFbYNLa_ds_y5Oe98ZU_ds_Dn0TyWTA"
+      },
+      "title": "XR-8 Protected SIDs"
+    },
+    "viz_8S9AzYmI": {
+      "type": "splunk.singlevalue",
+      "dataSources": {
+        "primary": "ds_gPo4z21C"
+      },
+      "title": "Errors",
+      "cornerRadius": [
+        21,
+        21,
+        21,
+        21
+      ],
+      "options": {
+        "backgroundColor": "> majorValue | rangeValue(backgroundColorEditorConfig)"
+      },
+      "context": {
+        "backgroundColorEditorConfig": [
+          {
+            "value": "#118832",
+            "to": 1
+          },
+          {
+            "value": "#D41F1F",
+            "from": 1
+          }
+        ]
+      }
+    },
+    "viz_3SMkU5mC": {
+      "type": "splunk.singlevalue",
+      "dataSources": {
+        "primary": "ds_8uJbSHdc_ds_gPo4z21C"
+      },
+      "title": "Errors",
+      "cornerRadius": [
+        21,
+        21,
+        21,
+        21
+      ],
+      "options": {
+        "backgroundColor": "> majorValue | rangeValue(backgroundColorEditorConfig)"
+      },
+      "context": {
+        "backgroundColorEditorConfig": [
+          {
+            "value": "#118832",
+            "to": 1
+          },
+          {
+            "value": "#D41F1F",
+            "from": 1
+          }
+        ]
+      }
+    },
+    "viz_7M3UTnMd": {
+      "type": "splunk.singlevalue",
+      "dataSources": {
+        "primary": "ds_J9pVUUz6_ds_8uJbSHdc_ds_gPo4z21C"
+      },
+      "title": "Errors",
+      "cornerRadius": [
+        21,
+        21,
+        21,
+        21
+      ],
+      "options": {
+        "backgroundColor": "> majorValue | rangeValue(backgroundColorEditorConfig)"
+      },
+      "context": {
+        "backgroundColorEditorConfig": [
+          {
+            "value": "#118832",
+            "to": 1
+          },
+          {
+            "value": "#D41F1F",
+            "from": 1
+          }
+        ]
+      }
+    },
+    "viz_WG7FtYik": {
+      "type": "splunk.singlevalue",
+      "dataSources": {
+        "primary": "ds_sChf2EWq_ds_J9pVUUz6_ds_8uJbSHdc_ds_gPo4z21C"
+      },
+      "title": "Errors",
+      "cornerRadius": [
+        21,
+        21,
+        21,
+        21
+      ],
+      "options": {
+        "backgroundColor": "> majorValue | rangeValue(backgroundColorEditorConfig)"
+      },
+      "context": {
+        "backgroundColorEditorConfig": [
+          {
+            "value": "#118832",
+            "to": 1
+          },
+          {
+            "value": "#D41F1F",
+            "from": 1
+          }
+        ]
+      }
+    },
+    "viz_FJmPWSWZ": {
+      "type": "splunk.singlevalue",
+      "dataSources": {
+        "primary": "ds_VNwAGVNI_ds_sChf2EWq_ds_J9pVUUz6_ds_8uJbSHdc_ds_gPo4z21C"
+      },
+      "title": "Errors",
+      "options": {
+        "backgroundColor": "> majorValue | rangeValue(backgroundColorEditorConfig)",
+        "unitPosition": "before"
+      },
+      "context": {
+        "backgroundColorEditorConfig": [
+          {
+            "value": "#118832",
+            "to": 1
+          },
+          {
+            "value": "#D41F1F",
+            "from": 1
+          }
+        ]
+      },
+      "cornerRadius": [
+        21,
+        21,
+        21,
+        21
+      ],
+      "eventHandlers": []
+    },
+    "viz_tGSLTjHY": {
+      "type": "splunk.events",
+      "title": "DPM Syslog",
+      "dataSources": {
+        "primary": "ds_b67GCuQf"
+      },
+      "containerOptions": {
+        "visibility": {}
+      }
+    },
+    "viz_UQpoR5EL": {
+      "type": "splunk.singlevalue",
+      "dataSources": {
+        "primary": "ds_oca2RVww"
+      },
+      "title": "The Label Error is",
+      "options": {
+        "majorValue": "> sparklineValues | lastPoint()",
+        "trendValue": "> sparklineValues | delta(-2)",
+        "sparklineValues": "> primary | seriesByName('Outgoing Label')"
+      }
+    }
+  },
+  "inputs": {
+    "input_PpNpIXaS": {
+      "options": {
+        "defaultValue": "-24h@h,now",
+        "token": "tr_fZNFwKWL"
+      },
+      "title": "Time Range Input Title",
+      "type": "input.timerange"
+    }
+  },
+  "layout": {
+    "type": "grid",
+    "options": {
+      "width": 1440,
+      "height": 960,
+      "gutterSize": 10,
+      "submitButton": true,
+      "submitOnDashboardLoad": true
+    },
+    "structure": [
+      {
+        "item": "viz_LpEXFI0U",
+        "type": "block",
+        "position": {
+          "x": 0,
+          "y": 0,
+          "w": 226,
+          "h": 80
+        }
+      },
+      {
+        "item": "viz_WOrWsfGL",
+        "type": "block",
+        "position": {
+          "x": 0,
+          "y": 80,
+          "w": 226,
+          "h": 144
+        }
+      },
+      {
+        "item": "viz_wRA5ZxAa",
+        "type": "block",
+        "position": {
+          "x": 0,
+          "y": 224,
+          "w": 226,
+          "h": 102
+        }
+      },
+      {
+        "item": "viz_OhLZ4SMk",
+        "type": "block",
+        "position": {
+          "x": 0,
+          "y": 326,
+          "w": 226,
+          "h": 261
+        }
+      },
+      {
+        "item": "viz_8S9AzYmI",
+        "type": "block",
+        "position": {
+          "x": 0,
+          "y": 587,
+          "w": 226,
+          "h": 140
+        }
+      },
+      {
+        "item": "viz_tGSLTjHY",
+        "type": "block",
+        "position": {
+          "x": 0,
+          "y": 727,
+          "w": 1166,
+          "h": 400
+        }
+      },
+      {
+        "item": "viz_UQpoR5EL",
+        "type": "block",
+        "position": {
+          "x": 0,
+          "y": 1127,
+          "w": 1166,
+          "h": 400
+        }
+      },
+      {
+        "item": "viz_dTAx8KB5",
+        "type": "block",
+        "position": {
+          "x": 226,
+          "y": 0,
+          "w": 234,
+          "h": 80
+        }
+      },
+      {
+        "item": "viz_Uy3orXT1",
+        "type": "block",
+        "position": {
+          "x": 226,
+          "y": 80,
+          "w": 234,
+          "h": 144
+        }
+      },
+      {
+        "item": "viz_VjphJcmx",
+        "type": "block",
+        "position": {
+          "x": 226,
+          "y": 224,
+          "w": 234,
+          "h": 102
+        }
+      },
+      {
+        "item": "viz_i8kkEwW9",
+        "type": "block",
+        "position": {
+          "x": 226,
+          "y": 326,
+          "w": 234,
+          "h": 261
+        }
+      },
+      {
+        "item": "viz_3SMkU5mC",
+        "type": "block",
+        "position": {
+          "x": 226,
+          "y": 587,
+          "w": 234,
+          "h": 140
+        }
+      },
+      {
+        "item": "viz_j6sRFC8U",
+        "type": "block",
+        "position": {
+          "x": 460,
+          "y": 0,
+          "w": 239,
+          "h": 80
+        }
+      },
+      {
+        "item": "viz_FNNZcKg5",
+        "type": "block",
+        "position": {
+          "x": 460,
+          "y": 80,
+          "w": 239,
+          "h": 144
+        }
+      },
+      {
+        "item": "viz_khJtGX5R",
+        "type": "block",
+        "position": {
+          "x": 460,
+          "y": 224,
+          "w": 239,
+          "h": 102
+        }
+      },
+      {
+        "item": "viz_kNVHslXb",
+        "type": "block",
+        "position": {
+          "x": 460,
+          "y": 326,
+          "w": 239,
+          "h": 261
+        }
+      },
+      {
+        "item": "viz_7M3UTnMd",
+        "type": "block",
+        "position": {
+          "x": 460,
+          "y": 587,
+          "w": 239,
+          "h": 140
+        }
+      },
+      {
+        "item": "viz_vhW41vwL",
+        "type": "block",
+        "position": {
+          "x": 699,
+          "y": 0,
+          "w": 226,
+          "h": 80
+        }
+      },
+      {
+        "item": "viz_QcPoQDAL",
+        "type": "block",
+        "position": {
+          "x": 699,
+          "y": 80,
+          "w": 226,
+          "h": 144
+        }
+      },
+      {
+        "item": "viz_OOnNAZZN",
+        "type": "block",
+        "position": {
+          "x": 699,
+          "y": 224,
+          "w": 226,
+          "h": 102
+        }
+      },
+      {
+        "item": "viz_OUvYwgtg",
+        "type": "block",
+        "position": {
+          "x": 699,
+          "y": 326,
+          "w": 226,
+          "h": 261
+        }
+      },
+      {
+        "item": "viz_WG7FtYik",
+        "type": "block",
+        "position": {
+          "x": 699,
+          "y": 587,
+          "w": 226,
+          "h": 140
+        }
+      },
+      {
+        "item": "viz_8xuKQ7yg",
+        "type": "block",
+        "position": {
+          "x": 925,
+          "y": 0,
+          "w": 241,
+          "h": 80
+        }
+      },
+      {
+        "item": "viz_vYOYcIiH",
+        "type": "block",
+        "position": {
+          "x": 925,
+          "y": 80,
+          "w": 241,
+          "h": 144
+        }
+      },
+      {
+        "item": "viz_FA9waDyJ",
+        "type": "block",
+        "position": {
+          "x": 925,
+          "y": 224,
+          "w": 241,
+          "h": 102
+        }
+      },
+      {
+        "item": "viz_FVUsZIDg",
+        "type": "block",
+        "position": {
+          "x": 925,
+          "y": 326,
+          "w": 241,
+          "h": 261
+        }
+      },
+      {
+        "item": "viz_FJmPWSWZ",
+        "type": "block",
+        "position": {
+          "x": 925,
+          "y": 587,
+          "w": 241,
+          "h": 140
+        }
+      }
+    ],
+    "globalInputs": [
+      "input_PpNpIXaS"
+    ]
+  },
+  "title": "SR DPM Clone",
+  "description": "Segment Routing Data Plane Monitoring",
+  "defaults": {
+    "dataSources": {
+      "ds.search": {
+        "options": {
+          "queryParameters": {
+            "latest": "$global_time.latest$",
+            "earliest": "$global_time.earliest$"
+          }
+        }
+      }
+    },
+    "tokens": {
+      "default": {
+        "err_label": {
+          "value": "Null"
+        }
+      }
+    }
+  }
+}
